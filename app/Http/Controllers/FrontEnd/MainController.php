@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Http\Controllers\Controller;
+use App\Models\About;
+use App\Models\Basket;
+use App\Models\Product;
+use App\Models\ProductCat;
 use App\Models\Sliders;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,7 +24,15 @@ class MainController extends Controller
     public function index()
     {
         $sliders = Sliders::all();
-        return view('frontEnd.mainPage.index', compact('sliders'));
+        $mainCats = ProductCat::where('branch_id', null)->get();
+        return view('frontEnd.mainPage.index', compact('sliders', 'mainCats'));
+    }
+
+
+    public function indexAboutPage()
+    {
+        $aboutData = About::orderBy('created_at', 'desc')->first();
+        return view('frontEnd.about.index', compact('aboutData'));
     }
 
     /**
@@ -104,13 +117,45 @@ class MainController extends Controller
         ]);
         return redirect()->back();
     }
-    // public function login(Request $request)
-    // {
-    //     Validator::make($request->all(), [
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'email', 'max:255'],
-    //         'password' => ['required', 'string', 'min:8'],
-    //     ]);
 
-    // }
+    public function showCheckOutPage()
+    {
+        $baskets = Basket::where('user_id', Auth::id())->get();
+        return view('frontEnd.checkOut.index', compact('baskets'));
+    }
+
+    public function showSingleProductPage()
+    {
+        return view('frontEnd.singleProduct.index');
+    }
+
+    public function getBaskets()
+    {
+        return $baskets = Basket::where('user_id', Auth::id())->with('product')->get();
+    }
+    public function addProductToBasket($basketId)
+    {
+        $model = Basket::find($basketId);
+        $model->qty++;
+        $model->price = ($model->qty) * $model->product->price;
+        $model->save();
+        return 'ok';
+    }
+    public function mineProductToBasket($basketId)
+    {
+        $model = Basket::find($basketId);
+        $model->qty--;
+        if ($model->qty == 0) {
+            return '0';
+        }
+        $model->price = ($model->qty) * $model->product->price;
+        $model->save();
+        return 'ok';
+    }
+
+    public function removeProductFromBasket($basketId)
+    {
+        $model = Basket::find($basketId)->delete();
+        return 'ok';
+    }
 }

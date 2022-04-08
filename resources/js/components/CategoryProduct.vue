@@ -77,6 +77,7 @@
                           name="submit"
                           value="Add to cart"
                           class="button btn"
+                          @click.prevent="addProductToBasket(product.id)"
                         />
                       </fieldset>
                     </form>
@@ -133,7 +134,11 @@
         <!-- ram -->
         <div class="left-side border-bottom py-2">
           <h3 class="agileits-sear-head mb-3">Price</h3>
-          <select class="form-control" v-model="priceSorting">
+          <select
+            class="form-control"
+            @click.prevent="sortingElement = 'price'"
+            v-model="ordering"
+          >
             <option value="asc" @click.prevent="getProducts()">
               most expensive
             </option>
@@ -144,13 +149,17 @@
         </div>
         <!-- //ram -->
         <!-- discounts -->
-        <!-- <div class="left-side border-bottom py-2">
+        <div class="left-side border-bottom py-2">
           <h3 class="agileits-sear-head mb-3">Discount</h3>
-          <select class="form-control" v-model="discountSorting">
-            <option value="asc" @click="getProducts()">most discount</option>
-            <option value="desc" @click="getProducts()">less discount</option>
+          <select
+            class="form-control"
+            @click.prevent="sortingElement = 'discount_price'"
+            v-model="ordering"
+          >
+            <option value="desc" @click="getProducts()">most discount</option>
+            <option value="asc" @click="getProducts()">less discount</option>
           </select>
-        </div> -->
+        </div>
         <!-- //discounts -->
         <!-- offers -->
         <div class="left-side border-bottom py-2">
@@ -214,6 +223,7 @@
 
 <script>
 import axios from "axios";
+import swal from "sweetalert2";
 export default {
   props: {
     catid: "",
@@ -224,8 +234,8 @@ export default {
       brands: [],
       selectedBrands: [],
       page: "1",
-      priceSorting: "",
-      discountSorting: "",
+      sortingElement: "",
+      ordering: "",
     };
   },
   methods: {
@@ -233,8 +243,8 @@ export default {
       axios
         .post("/frontApi/getCatProducts/" + this.catid + "?page=" + this.page, {
           selectedBrands: this.selectedBrands,
-          priceSorting: this.priceSorting,
-          discountSorting: this.discountSorting,
+          sortingElement: this.sortingElement,
+          ordering: this.ordering,
         })
         .then((response) => {
           console.log(response.data);
@@ -249,6 +259,25 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.brands = response.data;
+        })
+        .catch((error) => console.error(error));
+    },
+    addProductToBasket(productId) {
+      axios
+        .get("/frontApi/putProductToBasket/" + productId)
+        .then((response) => {
+          console.log(response.data);
+          if (response.data == "unAuthorized") {
+            swal.fire({
+              title: "You Should login first!",
+              icon: "error",
+            });
+          } else {
+            swal.fire({
+              title: "Product added to basket",
+              icon: "success",
+            });
+          }
         })
         .catch((error) => console.error(error));
     },

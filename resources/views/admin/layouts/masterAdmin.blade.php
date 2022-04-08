@@ -12,6 +12,26 @@
     <meta name="keywords"
         content="admin laravel template, template laravel admin, laravel css template, best admin template for laravel, laravel blade admin template, template admin laravel, laravel admin template bootstrap 4, laravel bootstrap 4 admin template, laravel admin bootstrap 4, admin template bootstrap 4 laravel, bootstrap 4 laravel admin template, bootstrap 4 admin template laravel, laravel bootstrap 4 template, bootstrap blade template, laravel bootstrap admin template">
 
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+
+    <!-- Internal Daterangepicker css-->
+    <link href="/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- InternalFileupload css-->
+    <link href="/assets/plugins/fileuploads/css/fileupload.css" rel="stylesheet" type="text/css" />
+
+    <!-- InternalFancy uploader css-->
+    <link href="/assets/plugins/fancyuploder/fancy_fileupload.css" rel="stylesheet" />
+
+    <!-- InternalSumoselect css-->
+    <link rel="stylesheet" href="/assets/plugins/sumoselect/sumoselect-rtl.css">
+
+    <!-- Internal TelephoneInput css-->
+    <link rel="stylesheet" href="/assets/plugins/telephoneinput/telephoneinput-rtl.css">
+
+
+
+
     <!-- Favicon -->
     <link rel="icon" href="/assets/img/brand/favicon.ico" type="image/x-icon" />
 
@@ -48,8 +68,9 @@
     <link href="/assets/switcher/css/switcher-rtl.css" rel="stylesheet">
     <link href="/assets/switcher/demo.css" rel="stylesheet">
 
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://jeremyfagis.github.io/dropify/dist/css/dropify.min.css">
 
 </head>
 
@@ -257,6 +278,22 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link with-sub" href="#"><span class="shape1"></span><span
+                                class="shape2"></span><i class="ti-wallet sidemenu-icon"></i><span
+                                class="sidemenu-label">درباره ما</span><i class="angle fe fe-chevron-left"></i></a>
+                        <ul class="nav-sub">
+                            <li class="nav-sub-item">
+                                <a class="nav-sub-link" href="{{ route('about.create') }}">ایجاد</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a class="nav-sub-link" href="{{ route('about.index') }}">لیست</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
 
                 </ul>
             </div>
@@ -881,6 +918,52 @@
     <!-- Back-to-top -->
     <a href="#top" id="back-to-top"><i class="fe fe-arrow-up"></i></a>
 
+
+    <!-- Select2 js-->
+    <script src="/assets/plugins/select2/js/select2.min.js"></script>
+
+    <!-- Jquery-Ui js-->
+    <script src="/assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
+
+    <!-- Internal Daternagepicker js-->
+    <script src="/assets/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+    <script src="/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Internal Fileuploads js-->
+    <script src="/assets/plugins/fileuploads/js/fileupload.js"></script>
+    <script src="/assets/plugins/fileuploads/js/file-upload.js"></script>
+
+    <!-- InternalFancy uploader js-->
+    <script src="/assets/plugins/fancyuploder/jquery.ui.widget.js"></script>
+    <script src="/assets/plugins/fancyuploder/jquery.fileupload.js"></script>
+    <script src="/assets/plugins/fancyuploder/jquery.iframe-transport.js"></script>
+    <script src="/assets/plugins/fancyuploder/jquery.fancy-fileupload.js"></script>
+    <script src="/assets/plugins/fancyuploder/fancy-uploader.js"></script>
+
+    <!-- Internal Form-elements js-->
+    <script src="/assets/js/advanced-form-elements.js"></script>
+    <script src="/assets/js/select2.js"></script>
+
+    <!-- InternalSumoselect js-->
+    <script src="/assets/plugins/sumoselect/jquery.sumoselect.js"></script>
+
+    <!-- Internal TelephoneInput js-->
+    <script src="/assets/plugins/telephoneinput/telephoneinput.js"></script>
+    <script src="/assets/plugins/telephoneinput/inttelephoneinput.js"></script>
+
+    <!-- Sticky js -->
+    <script src="/assets/js/sticky.js"></script>
+
+    <!-- Custom js -->
+    <script src="/assets/js/custom.js"></script>
+
+    <!-- Switcher js -->
+    <script src="/assets/switcher/js/switcher-rtl.js"></script>
+
+
+
+
+
     <!-- Jquery js-->
     <script src="/assets/plugins/jquery/jquery.min.js"></script>
 
@@ -932,6 +1015,11 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     {{-- summernote --}}
+
+    <!-- Load FilePond library -->
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('scripts')
 

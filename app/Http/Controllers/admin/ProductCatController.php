@@ -31,7 +31,8 @@ class ProductCatController extends Controller
      */
     public function create()
     {
-        return view('admin.productCat.create');
+        $cats = ProductCat::all();
+        return view('admin.productCat.create', compact('cats'));
     }
 
     /**
@@ -46,6 +47,11 @@ class ProductCatController extends Controller
         $model = new ProductCat();
         $model->name = $request->name;
         $model->description = $request->text;
+
+        if ($request->branchId != "main") {
+            $model->branch_id = $request->branchId;
+        }
+
         $model->save();
         \Illuminate\Support\Facades\Session::flash('cat-save', "دسته بندی ایجاد شد");
         return redirect()->back();

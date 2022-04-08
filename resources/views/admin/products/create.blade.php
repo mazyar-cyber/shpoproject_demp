@@ -51,8 +51,22 @@
                             <input type="number" class="form-control input-lg" name="discount_price" required>
                         </div>
                         <div class="form-group">
-                            <label>عکس</label>
+                            <label>عکس صفحه اصلی</label>
                             <input type="file" class="form-control input-lg" name="pic" required>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                {{-- <input type="file" id="demo" type="file"  name="files"
+                                    accept=".jpg, .png, image/jpeg, image/png, " multiple  data-allow-reorder="true"
+                                    data-max-file-size="3MB" data-max-files="3"> --}}
+
+                                <input type="file" class="filepond" name="fileponds[]" multiple
+                                    data-max-file-size="3MB" data-max-files="3" accept="image/png, image/jpeg" />
+                                @error('fileponds')
+                                    <span class="col-sm-12  alert alert-danger text-center">{{ $message }}</span>
+                                @enderror
+
+                            </div>
                         </div>
                         <div class="form-control">
                             <input type="submit" value="ذخیره" class="btn btn-primary col-sm-12">
@@ -68,6 +82,23 @@
     <script>
         $(document).ready(function() {
             $('#summernote').summernote();
+        });
+    </script>
+    <script>
+        $('.dropify').dropify();
+    </script>
+    <script>
+        // FilePond.registerPlugin(FilePondPluginImagePreview);
+        FilePond.registerPlugin(FilePondPluginFileValidateType, FilePondPluginFileValidateSize);
+        FilePond.parse(document.body);
+        FilePond.setOptions({
+            server: {
+                url: '/admin/storeProductUpload',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            }
+
         });
     </script>
 @endsection

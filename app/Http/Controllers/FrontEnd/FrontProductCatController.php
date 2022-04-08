@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Http\Controllers\Controller;
+use App\Models\Basket;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontProductCatController extends Controller
 {
@@ -88,7 +90,7 @@ class FrontProductCatController extends Controller
 
     public function getCatProducts(Request $request, $catId)
     {
-        if ($request->priceSorting == "") {
+        if ($request->sortingElement == "") {
             if (count($request->selectedBrands) == 0) {
                 return $products = Product::where('category_id', $catId)->with('category')->paginate(3);
             } else {
@@ -96,14 +98,34 @@ class FrontProductCatController extends Controller
             }
         } else {
             if (count($request->selectedBrands) == 0) {
-                return $products = Product::where('category_id', $catId)->orderBy('price', $request->priceSorting)->with('category')->paginate(3);
+                return $products = Product::where('category_id', $catId)->orderBy($request->sortingElement, $request->ordering)->with('category')->paginate(3);
             } else {
-                return $products = Product::where('category_id', $catId)->orderBy('price', $request->priceSorting)->whereIn('brand_id', $request->selectedBrands)->with('category')->paginate(3);
+                return $products = Product::where('category_id', $catId)->orderBy($request->sortingElement, $request->ordering)->whereIn('brand_id', $request->selectedBrands)->with('category')->paginate(3);
             }
         }
     }
     public function getBrands()
     {
         return $brands = Brand::all();
+    }
+    public function addProductToBasket($productId)
+    {
+
+        if (!Auth::check()) {
+            return 'unAuthorized';
+        }
+        if (count(Basket::where('user_id', Auth::id())->where('product_id', $productId)->get()) > 0) {
+            $model = Basket::where('user_id', Auth::id())->where('product_id', $productId)->first();
+            $model->qty++;
+            $model->price = ($model->qty) * Product::find($productId)->price;
+            $model->save();
+        } else {
+
+            $model = new Basket();
+            $model->product_id = $productId;
+            $model->user_id = Auth::id();
+            $model->price = Product::find($productId)->price;
+            $model->save();
+        }
     }
 }

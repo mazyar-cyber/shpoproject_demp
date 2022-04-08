@@ -1,10 +1,8 @@
 @extends('frontEnd.layouts.master')
 @section('css')
     <style>
-
-        @foreach ($sliders as $s)
-        .carousel-item.item{{$s->id}} {
-            background: url(../photos/sliders/{{$s->photo_path}}) no-repeat center;
+        @foreach ($sliders as $s).carousel-item.item{{ $s->id }} {
+            background: url(../photos/sliders/{{ $s->photo_path }}) no-repeat center;
             background-size: cover;
             -webkit-background-size: cover;
             -moz-background-size: cover;
@@ -13,8 +11,8 @@
             min-height: 640px;
 
         }
-        @endforeach
 
+        @endforeach
 
     </style>
 @endsection
@@ -50,153 +48,57 @@
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                Electronics
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="agile_inner_drop_nav_info p-4">
-                                    <h5 class="mb-3">Mobiles, Computers</h5>
-                                    <div class="row">
-                                        <div class="col-sm-6 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <li>
-                                                    <a href="{{ route('frontProductCat.show',2) }}">All Mobile Phones</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">All Mobile Accessories</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Cases & Covers</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Screen Protectors</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Power Banks</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">All Certified Refurbished</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Tablets</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Wearable Devices</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Smart Home</a>
-                                                </li>
-                                            </ul>
+
+
+
+
+                        @foreach ($mainCats as $c)
+                            <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
+                                <a class="nav-link dropdown-toggle" href=" {{route('frontProductCat.show', $c->id)}} " role="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    {{ $c->name }}
+                                </a>
+                                <div class="dropdown-menu">
+                                    @foreach ($c->branches as $branch)
+                                        <div class="agile_inner_drop_nav_info p-4">
+                                            <h5 class="mb-3"><a
+                                                    href="{{ route('frontProductCat.show', $branch->id) }}">
+                                                    {{ $branch->name }} </a></h5>
+
+
+                                            @if (count($branch->branches) != 0)
+                                                <div class="row">
+                                                    <div class="col-sm-6 multi-gd-img">
+                                                        <ul class="multi-column-dropdown">
+                                                            @foreach ($branch->branches as $b)
+                                                                <li>
+                                                                    <a
+                                                                        href="{{ route('frontProductCat.show', $b->id) }}">{{ $b->name }}</a>
+                                                                </li>
+                                                            @endforeach
+
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            @endif
+
+
                                         </div>
-                                        <div class="col-sm-6 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <li>
-                                                    <a href="product.html">Laptops</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Drives & Storage</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Printers & Ink</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Networking Devices</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Computer Accessories</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Game Zone</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Software</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    @endforeach
+
                                 </div>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                Appliances
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="agile_inner_drop_nav_info p-4">
-                                    <h5 class="mb-3">TV, Appliances, Electronics</h5>
-                                    <div class="row">
-                                        <div class="col-sm-6 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <li>
-                                                    <a href="product2.html">Televisions</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Home Entertainment Systems</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Headphones</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Speakers</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">MP3, Media Players & Accessories</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Audio & Video Accessories</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Cameras</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">DSLR Cameras</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Camera Accessories</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-6 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <li>
-                                                    <a href="product2.html">Musical Instruments</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Gaming Consoles</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">All Electronics</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Air Conditioners</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Refrigerators</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Washing Machines</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Kitchen & Home Appliances</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">Heating & Cooling Appliances</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product2.html">All Appliances</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        @endforeach
+
+
+
                         <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
                             <a class="nav-link" href="about.html">About Us</a>
                         </li>
+
+
+
                         <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
                             <a class="nav-link" href="product.html">New Arrivals</a>
                         </li>
@@ -245,8 +147,8 @@
                     <div class="container">
                         <div class="w3l-space-banner">
                             <div class="carousel-caption p-lg-5 p-sm-4 p-3">
-                               {!! $s->text !!}
-                                <a class="button2" href="{{$s->link}}" target="_blank">Shop Now </a>
+                                {!! $s->text !!}
+                                <a class="button2" href="{{ $s->link }}" target="_blank">Shop Now </a>
                             </div>
                         </div>
                     </div>

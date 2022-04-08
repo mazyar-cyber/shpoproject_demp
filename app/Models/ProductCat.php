@@ -9,7 +9,13 @@ class ProductCat extends Model
 {
     use HasFactory;
 
-    public function products(){
-        return $this->hasMany(Product::class,'category_id');
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id');
+    }
+
+    public function branches()
+    {
+        return $this->hasMany(ProductCat::class, 'branch_id');
     }
 }

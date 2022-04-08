@@ -22,6 +22,15 @@
                             <input type="text" name="name" class="form-control input-lg">
                         </div>
                         <div class="form-group">
+                            <label>زیرشاخه را تعیین کنید</label>
+                            <select name="branchId" class="form-control">
+                                <option value="main">اصلی</option>
+                                @foreach ($cats as $cat)
+                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>توضیحات</label>
                             <textarea style="direction: rtl" class="form-control input-lg" name="text"></textarea>
                         </div>
